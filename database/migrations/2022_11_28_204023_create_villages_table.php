@@ -15,7 +15,15 @@ return new class extends Migration
     {
         Schema::create('villages', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('nom');
+            $table->timestamp('created_at')->useCurrent();
+            //$table->timestamp('updated_at')->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'))->nullable();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+
+            
+            $table->softDeletes();
+
+
         });
     }
 

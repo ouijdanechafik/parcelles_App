@@ -15,7 +15,20 @@ return new class extends Migration
     {
         Schema::create('photos_identites', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('src');
+            $table->unsignedBigInteger('proprietaire_id');
+            $table->timestamp('created_at')->useCurrent();
+            //$table->timestamp('updated_at')->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'))->nullable();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+
+            
+            $table->softDeletes();
+
+
+            $table->foreign('proprietaire_id')
+            ->references('id')
+            ->on('proprietaires')
+            ->onDelete('cascade');
         });
     }
 

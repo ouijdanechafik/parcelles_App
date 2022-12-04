@@ -16,12 +16,16 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('email');
+            $table->string('username')->unique();
             $table->string('password');
             $table->string('role');
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            //$table->timestamp('updated_at')->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'))->nullable();
+            //$table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON update CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            
         });
     }
 
